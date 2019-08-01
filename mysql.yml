@@ -1,0 +1,39 @@
+---
+- hosts: all
+  vars:
+   root_db_password: semperti
+  become: true
+  tasks:
+  - name: Descargar Mysql  
+    get_url:
+       url: http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm  
+       dest: /tmp/mysql-community-release-el7-7.noarch.rpm
+  - name: Install MySQL Community Repo
+    command: /usr/bin/rpm -ivh /tmp/mysql-community-release-el7-7.noarch.rpm 
+    args:
+      warn: false
+  - name: Instalar MySQL Server
+    yum: 
+     name: mysql-server 
+     state: present
+
+  - name: Instalar MySQL-Python
+    yum: 
+     name: MySQL-python 
+     state: present
+
+  - name: Habilitar Servicio Msyqld e iniciarlo
+    service: 
+     name: mysqld 
+     state: started 
+     enabled: yes
+
+  - name: Borrar BD de prueba
+    mysql_db: 
+     name: test 
+     state: absent
+
+  - name: Borrar Cuentas de usuarios anonimos
+    mysql_user: 
+     name: "" 
+     state: absent

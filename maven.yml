@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Descargar Maven 3.6.1
+    get_url: url=http://apache.dattatec.com/maven/maven-3/3.6.1/binaries/apache-maven-3.6.1-bin.tar.gz dest=/home/apache-maven-3.6.1-bin.tar.gz
+  - name: Extraer Maven
+    command: tar -xvf /home/apache-maven-3.6.1-bin.tar.gz -C /home/
+  - name: Mover directorio
+    command: mv /home/apache-maven-3.6.1 /opt/maven
+  - name: profile
+    copy: content="export M2_HOME=/opt/maven \n" dest=/etc/profile.d/maven.sh
+  - name: crear path Maven
+    lineinfile:
+     path: /etc/profile.d/maven.sh
+     line: 'export PATH=${M2_HOME}/bin:${PATH}'
+  - name: Profile Maven
+    shell: source /etc/profile.d/maven.sh
+    args:
+     warn: false

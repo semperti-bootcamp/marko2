@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: instalar jdk-1.8
+    yum:
+     name: java-1.8.0-openjdk-devel
+     state: latest
