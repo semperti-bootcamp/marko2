@@ -3,7 +3,8 @@
 *Crear VM con Centos7
   Instalar ANSIBLE y todas sus dependencias para su buen funcionamiento:
 
-  Procedimiento de instalacion Ansible en Centos7: https://www.digitalocean.com/community/tutorials/how-to-install-and-  configure-ansible-on-centos-7
+  Procedimiento de instalacion Ansible en Centos7: 
+  https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-centos-7
 
 *Realizar configuracion de archivos hosts de ansible (Este archivo contiene las ip o direcciones de equipos a provisionar)
 
