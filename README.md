@@ -16,7 +16,7 @@
 
 *Correr playbooks de ansible con el comando:
 
- ansible playbooks  nombredelplayobook.yml
+ ansible playbook  nombredelplayobook.yml
 
  ver screens de instalacion de playbooks https://imgur.com/a/nmKJvnL
 
