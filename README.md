@@ -1,8 +1,11 @@
 # Requisitos
 
 *Crear VM con Centos7
-  Instalar ANSIBLE y todas sus dependencias para su buen funcionamiento:
-
+ La VM debe cumplir con lo siguiente:
+ -Conexion a internet
+ -Instalar ANSIBLE y todas sus dependencias.
+ -Docker
+  
   Procedimiento de instalacion Ansible en Centos7: 
   https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-centos-7
 
@@ -12,11 +15,19 @@
  - Maven
  - JDK 1.8+
  - Mysql 5.6+
-
+ - Exponer puerto 8080
 
 *Correr playbooks de ansible con el comando:
 
  ansible playbook  nombredelplayobook.yml
 
  ver screens de instalacion de playbooks https://imgur.com/a/nmKJvnL
+ 
+Se debe probar aplicacion Java Maven con el siguiente comando en directorio ./CODE
+
+** mvn spring-boot:run
+
+Para comprobar el funcionamiento de la aplicacion ir a localhost:8080
+
+
 
