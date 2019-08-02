@@ -28,7 +28,6 @@ Se debe probar aplicacion Java Maven con el siguiente comando en directorio ./CO
 ** mvn spring-boot:run
 
 Para comprobar el funcionamiento de la aplicacion ir a localhost:8080
-ver imagen https://github.com/semperti-bootcamp/marko2/blob/master/Imagenes/Loginjavapp.png
-
+![](/Imagenes/Loginjavapp.png)
 
 
