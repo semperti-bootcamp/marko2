@@ -51,4 +51,4 @@ Se debe probar aplicacion Java Maven con el siguiente comando en directorio /COD
 			- username: user1 / password: user1
 			- username: user2 / password: user2
 			
-![](/Imagenes/)
+![](/Imagenes/Login2.png)
