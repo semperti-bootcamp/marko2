@@ -35,6 +35,12 @@ Se debe probar aplicacion Java Maven con el siguiente comando en directorio /COD
 	4. [Opcional] Por defecto, la aplicación almacena los PDFs en el directorio <User_home>/upload. Si querés cambiar este directorio, podés utilizar la propiedad -Dupload-dir=<path>.
 	5. [Opcional] Los PDFs predefinidos pueden encontrarse en la carpeta PDF. Si querés ver los PDFs, tenés que copiar los contenidos de esta carpeta a lo definido en el paso anterior.
 	
+
+![](/Imagenes/Loginjavapp.png)
+
+
+
+
 ## Datos de autenticación
 
 	El sistema viene con 4 cuentas pre-definidas:
@@ -44,6 +50,5 @@ Se debe probar aplicacion Java Maven con el siguiente comando en directorio /COD
 		2. public users:
 			- username: user1 / password: user1
 			- username: user2 / password: user2
-![](/Imagenes/Loginjavapp.png)
-
-
+			
+![](/Imagenes/)
