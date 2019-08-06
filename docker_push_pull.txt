@@ -1,0 +1,2 @@
+Subir imagen de docker: docker push <nexus-hostname>:<repository-port>/<image:version>
+Descargar imagen de docker:  docker pull <nexus-hostname>:<repository-port>/<image>
