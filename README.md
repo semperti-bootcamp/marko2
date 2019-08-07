@@ -4,7 +4,7 @@
  - Se debe realizar mendia script de Ansible
 
 ## Instrucciones:
-# Ir al directorio /Code y editar archivo pom.xml agregar lo siguiente
+## Ir al directorio /Code y editar archivo pom.xml agregar lo siguiente
  <distributionManagement>  
       <repository>  
           <id>nexus-releases</id>  
@@ -18,7 +18,7 @@
       </snapshotRepository>  
   </distributionManagement> 
   
-  # Agregar nuestro SCM 
+  ## Agregar nuestro SCM 
    
    <scm>
     <connection>scm:git:git@github.com:semperti-bootcamp/marko2.git</connection>
@@ -27,7 +27,7 @@
       <tag>journals-3.3</tag>
   </scm>
 
-# Configuracion de Maven para conexion con repositorio Nexus, este archivo se encuentra en el path de MAVEN/settings.xml
+## Configuracion de Maven para conexion con repositorio Nexus, este archivo se encuentra en el path de MAVEN/settings.xml
  
  <server>
         <id>nexus-snapshots</id>
@@ -40,16 +40,16 @@
         <password>PASSWORD</password>
     </server>
     
- # Crear Snapshot y subir a Nexus
+ ## Crear Snapshot y subir a Nexus
   
    mvn versions:set -DnewVersion=3.0-SNAPSHOT
    mvn deploy
    
- # Hacer Release a Nexus
+ ## Hacer Release a Nexus
    mvn -B release:clean release:prepare release:perform
 	
 	
-# Crear script de Ansible para deploy de app java a Nexus
+## Crear script de Ansible para deploy de app java a Nexus
 
 Ejecutamos el siguiente comando  ansible-playbook ./ansible/deploy_to_nexus.yml
 
