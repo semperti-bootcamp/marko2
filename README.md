@@ -1,4 +1,5 @@
-# Subir Docker Imagen a Nexus ##( Nota:No se usara Nexus repository para subir imagen docker por conflicto en port)
+# Subir Docker Imagen a Nexus 
+##( Nota:No se usara Nexus repository para subir imagen docker por conflicto en port)
 
 
 ## Usaremos repositorio de dockerhub
