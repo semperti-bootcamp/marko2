@@ -1,0 +1,9 @@
+---
+hosts: markobootcamp
+become: true
+tasks:
+- name: Snapshot deploy
+  command: mvn deploy -f /media/marko-master/Code/
+
+- name: Release a Nexus
+  command: mvn -B release:clean release:prepare release:perform -f  /media/marko-master/Code/
