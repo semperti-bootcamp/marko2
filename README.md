@@ -1,54 +1,31 @@
 # Requisitos
 
-*Crear VM con Centos7
- La VM debe cumplir con lo siguiente:
- -Conexion a internet
- -Instalar ANSIBLE y todas sus dependencias.
- -Docker
-  
-  Procedimiento de instalacion Ansible en Centos7: 
-  https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-centos-7
+## Dockerizar aplicacion Java
 
-*Realizar configuracion de archivos hosts de ansible (Este archivo contiene las ip o direcciones de equipos a provisionar)
+- Se debe proveer el Dockerfile y los archivos necesarios para generar la imagen
+- Debe quedar corriendo el container
+- Debe proveerse un link para probar el funcionamiento del contenedor
 
-- Provisionar VM mediante ANSIBLE con lo siguiente:
- - Maven
- - JDK 1.8+
- - Mysql 5.6+
- - Exponer puerto 8080
+## Instalar Docker
 
-*Correr playbooks de ansible con el comando:
+1. Ejecutar comando: yum install -y docker
+2. encender el servicio: systemctl start docker
+3. habilitar servicio: systemctl enable docker
 
- ansible playbook  nombredelplayobook.yml
+## Crear imagen Docker
 
- ver screens de instalacion de playbooks https://imgur.com/a/nmKJvnL
- 
-Se debe probar aplicacion Java Maven con el siguiente comando en directorio /CODE
 
-** mvn spring-boot:run
-
-## Instrucciones para correr esta aplicación
-
-	1. Configurar la conexión de la base de datos desde Code/src/main/resources/application.properties
-	2. Ubicate en la carpeta del código y ejecutá "mvn spring-boot:run".
-	3. Revisá la siguiente dirección http://localhost:8080
-	4. [Opcional] Por defecto, la aplicación almacena los PDFs en el directorio <User_home>/upload. Si querés cambiar este directorio, podés utilizar la propiedad -Dupload-dir=<path>.
-	5. [Opcional] Los PDFs predefinidos pueden encontrarse en la carpeta PDF. Si querés ver los PDFs, tenés que copiar los contenidos de esta carpeta a lo definido en el paso anterior.
+1. Creamos un dockerfile para construir imagen con la configuracion deseada:
+```
+	FROM openjdk:8-jdk-alpine
+        COPY journals-SNAPSHOT-1.0.jar /tmp/journals-SNAPSHOT-1.0.jar
+        CMD ["java","-jar","tmp/journals-SNAPSHOT-1.0.jar"]
+        EXPOSE 8080
 	
-
-![](/Imagenes/Loginjavapp.png)
-
-
-
-
-## Datos de autenticación
-
-	El sistema viene con 4 cuentas pre-definidas:
-		1. publishers:
-			- username: publisher1 / password: publisher1
-			- username: publisher2 / password: publisher2
-		2. public users:
-			- username: user1 / password: user1
-			- username: user2 / password: user2
-			
-![](/Imagenes/Login2.png)
+2. Ejecutamos el siguiente comando para construir imagen a partir del dockerfile:
+```
+ 	docker build --tag <nombre-imagen>:<tag/version> . 
+	
+3. Corremos la imagen con el comando:
+```
+	docker run -ti -d -p 8080:8080 --net=host  <nombre-imagen>:<tag/version>
