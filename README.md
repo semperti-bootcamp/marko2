@@ -1,54 +1,55 @@
 # Requisitos
+ - Cargar un snapshot de la aplicacion java
+ - Cargar un release de la aplicacion java
+ - Se debe realizar mendia script de Ansible
 
-*Crear VM con Centos7
- La VM debe cumplir con lo siguiente:
- -Conexion a internet
- -Instalar ANSIBLE y todas sus dependencias.
- -Docker
+## Instrucciones:
+# Ir al directorio /Code y editar archivo pom.xml agregar lo siguiente
+ <distributionManagement>  
+      <repository>  
+          <id>nexus-releases</id>  
+          <name>Nexus Release Repository</name>  
+          <url>http://10.252.7.162:8081/repository/maven-releases/</url>  
+      </repository>  
+      <snapshotRepository>  
+          <id>nexus-snapshots</id>  
+          <name>Nexus Snapshot Repository</name>  
+         <url>http://10.252.7.162:8081/repository/maven-snapshots/</url>
+      </snapshotRepository>  
+  </distributionManagement> 
   
-  Procedimiento de instalacion Ansible en Centos7: 
-  https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-centos-7
+  # Agregar nuestro SCM 
+   
+   <scm>
+    <connection>scm:git:git@github.com:semperti-bootcamp/marko2.git</connection>
+    <url>git@github.com:semperti-bootcamp/marko2.git</url>
+    <developerConnection>scm:git:git@github.com:semperti-bootcamp/marko2.git</developerConnection>
+      <tag>journals-3.3</tag>
+  </scm>
 
-*Realizar configuracion de archivos hosts de ansible (Este archivo contiene las ip o direcciones de equipos a provisionar)
-
-- Provisionar VM mediante ANSIBLE con lo siguiente:
- - Maven
- - JDK 1.8+
- - Mysql 5.6+
- - Exponer puerto 8080
-
-*Correr playbooks de ansible con el comando:
-
- ansible playbook  nombredelplayobook.yml
-
- ver screens de instalacion de playbooks https://imgur.com/a/nmKJvnL
+# Configuracion de Maven para conexion con repositorio Nexus, este archivo se encuentra en el path de MAVEN/settings.xml
  
-Se debe probar aplicacion Java Maven con el siguiente comando en directorio /CODE
-
-** mvn spring-boot:run
-
-## Instrucciones para correr esta aplicación
-
-	1. Configurar la conexión de la base de datos desde Code/src/main/resources/application.properties
-	2. Ubicate en la carpeta del código y ejecutá "mvn spring-boot:run".
-	3. Revisá la siguiente dirección http://localhost:8080
-	4. [Opcional] Por defecto, la aplicación almacena los PDFs en el directorio <User_home>/upload. Si querés cambiar este directorio, podés utilizar la propiedad -Dupload-dir=<path>.
-	5. [Opcional] Los PDFs predefinidos pueden encontrarse en la carpeta PDF. Si querés ver los PDFs, tenés que copiar los contenidos de esta carpeta a lo definido en el paso anterior.
+ <server>
+        <id>nexus-snapshots</id>
+        <username>USER</username>
+        <password>PASSWORD</password>
+    </server>
+    <server>
+        <id>nexus-releases</id>
+        <username>USER</username>
+        <password>PASSWORD</password>
+    </server>
+    
+ # Crear Snapshot y subir a Nexus
+  
+   mvn versions:set -DnewVersion=3.0-SNAPSHOT
+   mvn deploy
+   
+ # Hacer Release a Nexus
+   mvn -B release:clean release:prepare release:perform
 	
+	
+# Crear script de Ansible para deploy de app java a Nexus
 
-![](/Imagenes/Loginjavapp.png)
+Ejecutamos el siguiente comando  ansible-playbook ./ansible/deploy_to_nexus.yml
 
-
-
-
-## Datos de autenticación
-
-	El sistema viene con 4 cuentas pre-definidas:
-		1. publishers:
-			- username: publisher1 / password: publisher1
-			- username: publisher2 / password: publisher2
-		2. public users:
-			- username: user1 / password: user1
-			- username: user2 / password: user2
-			
-![](/Imagenes/Login2.png)
