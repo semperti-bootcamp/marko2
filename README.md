@@ -1,4 +1,4 @@
-# Subir Docker Imagen a Nexus( *Nota:No se usara Nexus repository para subir imagen docker por conflicto en port)
+# Subir Docker Imagen a Nexus ##( Nota:No se usara Nexus repository para subir imagen docker por conflicto en port)
 
 
 ## Usaremos repositorio de dockerhub
@@ -10,4 +10,4 @@
 	4. docker rmi  <name-repository>/<name-imagen>:<tag> --force
 	5. docker pull <name-repository>/<name-imagen>:<tag>
 	6. docker run  -d -p 8080:8080 --net=host <name-imagen>:<tag>
-	7. docker ps -a
+	7. docker ps -a ´´´
