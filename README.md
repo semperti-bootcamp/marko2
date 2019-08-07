@@ -1,4 +1,4 @@
-# Requisitos
+
 
 *Crear VM con Centos7
  La VM debe cumplir con lo siguiente:
