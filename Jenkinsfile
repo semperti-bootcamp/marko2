@@ -53,7 +53,7 @@ pipeline {
 		timeout(300) {
 		    waitUntil {
 		       script {3
-			 def r = sh script: 'curl http://localhost:8080', returnStatus: true
+			 def r = sh script: 'curl http://10.252.7.163:8080', returnStatus: true
 			 return (r == 0);
 		       }
 		    }
@@ -62,7 +62,7 @@ pipeline {
         }
         stage('Stage 7 - Run javapp') {
             steps {
-		sh "curl http://localhost:8080"
+		sh "curl http://10.252.7.163:8080"
             }
         }
     }
