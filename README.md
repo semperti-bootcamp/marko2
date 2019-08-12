@@ -12,5 +12,5 @@
 	3. Se ejecuta con el comando: ansible playbook jdk1.8.yml (realizar el mismo comando para cada playbook
 	
 ![Instalacion de Maven](https://github.com/semperti-bootcamp/marko2/blob/configurar-VM-con-Ansible/Imagenes/maven.png)
-![Instalacion de Mysql](https://github.com/semperti-bootcamp/marko2/blob/Crear-VM/mysql.png)
-![instalacion de maven](https://github.com/semperti-bootcamp/marko2/blob/Crear-VM/maven.png)
+![Instalacion de Mysql](https://github.com/semperti-bootcamp/marko2/blob/configurar-VM-con-Ansible/Imagenes/mysql.png)
+![instalacion de JDK ](https://github.com/semperti-bootcamp/marko2/blob/configurar-VM-con-Ansible/Imagenes/jdk.png)
