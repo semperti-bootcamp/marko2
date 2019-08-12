@@ -1,9 +1,0 @@
----
-hosts: all
-tasks:
-become: true
-- name: Cargando SNAPSHOT a Nexus 
-  command: /media/marko-master/Code/  mvn deploy
-
-- name: Cargando Release en Nexus
-  command: /media/marko-master/Code/ mvn -B release:clean release:prepare release:perform
