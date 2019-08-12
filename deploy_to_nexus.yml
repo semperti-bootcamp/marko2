@@ -1,9 +1,20 @@
 ---
-hosts: markobootcamp
-become: true
-tasks:
-- name: Snapshot deploy
-  command: mvn deploy -f /media/marko-master/Code/
+- name: Maven Deploy
+  hosts: all
 
-- name: Release a Nexus
-  command: mvn -B release:clean release:prepare release:perform -f  /media/marko-master/Code/
+  vars:
+    new_version: 3.1
+    project_path: /media/marko-master/Code
+    snapshot: False
+
+  tasks:
+    - name: Versioning Release 
+      command: "mvn -f {{ project_path }}/pom.xml versions:set -DnewVersion={{ new_version }}"
+      when: not snapshot 
+      
+    - name: Versioning Snapshot
+      command: "mvn -f {{ project_path }}/pom.xml versions:set -DnewVersion={{ new_version }}-SNAPSHOT"
+      when: snapshot 
+     
+    - name: Upload to Nexus
+      command: "mvn -f {{ project_path }}/pom.xml clean deploy"
