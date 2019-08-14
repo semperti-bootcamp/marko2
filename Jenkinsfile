@@ -1,69 +1,66 @@
 pipeline {
 
+
     agent {
         node (){
             label 'bc-marko'
-        }
+        } 
     }
     environment {
         ANSIBLE_HOST_KEY_CHECKING = 'false'
-	VERSION = "3.1"
+          registry = "markoaular/javaapp"
+           registryCredential = 'markoaular'
+		   AppVersion = "3.0.1"
     }
 
-    stages {
-        stage('Stage 1 - Slave configuration')
+    stages {   
+        stage('Unit Test & Package') {
             steps {
-		sh "sudo yum -y install ansible curl wget unzip "
+                    sh "mvn test -f /root/Code/"   
+                    sh "mvn package -f /root/Code/"   
+                
             }
         }
-
-        stage('Stage 2 - Unit Test') {
+        
+          stage('Clean & Deploy Snapshot') {
             steps {
-                sh "mvn test -f Code/pom.xml"
+                    sh "mvn versions:set -DnewVersion=$env.AppVersion-SNAPSHOT -f /root/Code/pom.xml"
+                    sh "mvn -B clean deploy -DnewVersion=$env.AppVersion-SNAPSHOT -f /root/Code/ -DskipTests"   
+                
             }
         }
-
-        stage('Stage 3 - Release to Nexus') {
-            steps {
-                sh "mvn versions:set -DnewVersion=$env.VERSION -f Code/pom.xml"
-                sh "mvn clean deploy -f Code/pom.xml -DskipTests" 
+        stage('Release & Deploy Image to Nexus'){
+            steps{  
+                  
+                   sh "mvn -B release:clean release:prepare release:perform    -f /root/Code/ -DcheckModificationExcludeList=**  -DskipTests"   
+                 
+              
             }
         }
-        stage('Stage 4 - Snapshot to Nexus') {
-            steps {
-                sh "mvn versions:set -DnewVersion=$env.VERSION-SNAPSHOT -f Code/pom.xml"
-                sh "mvn clean deploy -f Code/pom.xml -DskipTests" 
-            }
+  
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$env.AppVersion"
         }
-        stage('Stage 5 - Docker build, tag & push images ') {
-            steps {
-		withCredentials([usernamePassword(credentialsId: '95864747', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {	
-			dir("${env.WORKSPACE}/ansible"){
-				sh "ansible-playbook docker.yml  -e VERSION=$env.VERSION -e USERNAME=$USERNAME -e PASSWORD=$PASSWORD"
-			}
-		} 
-            }
-	}
-        stage('Stage 6 - Docker pull & run') {
-            steps {
-		dir("${env.WORKSPACE}/ansible"){
-			sh "pwd"
-                	sh "ansible-playbook runimagedocker.yml -e VERSION=$env.VERSION"
-		}
-		timeout(300) {
-		    waitUntil {
-		       script {3
-			 def r = sh script: 'curl http://localhost:8080', returnStatus: true
-			 return (r == 0);
-		       }
-		    }
-		} 
-            }
-        }
-        stage('Stage 7 - Run javapp') {
-            steps {
-		sh "curl http://localhost:8080"
-            }
-        }
+      }
     }
-}
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+    stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $registry:$env.AppVersion"
+      }
+    }
+        
+        
+        
+  }
+
